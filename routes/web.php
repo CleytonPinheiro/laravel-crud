@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ProdutosController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes');

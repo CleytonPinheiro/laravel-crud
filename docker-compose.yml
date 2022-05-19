@@ -23,7 +23,7 @@ services:
       - '3306:3306'
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=banco_de_dados
+      - MYSQL_DATABASE=produtos
 
   sgdb:
     container_name: phpmyadmin
