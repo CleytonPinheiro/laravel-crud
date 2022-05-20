@@ -7,6 +7,11 @@ use Illuminate\Http\Request;
 class ProdutosController extends Controller
 {
     public function index() {
-        echo('produtos');
+        try {
+          return "PRODUTOS";
+
+        } catch (\Throwable $th) {
+            return $th;
+        }
     }
 }
