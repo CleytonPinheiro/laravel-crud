@@ -13,7 +13,7 @@ class ClientesController extends Controller
 
         } catch (\Throwable $th) {
 
-            return response()->json(['Error ao carregar os clientes:' => $th]);
+            return response()->json(['Error ao carregar os clientes:' => $th], 422);
         }
     }
 

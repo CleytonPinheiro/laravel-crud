@@ -31,4 +31,8 @@ Route::controller(ClientesController::class)->group(function () {
 
 Route::controller(ProdutosController::class)->group(function () {
     Route::get('/produtos', 'index')->name('produtos.index');
+    Route::post('/produtos', 'store')->name('produtos.store');
+    Route::delete('/produto/{id}', 'destroy')->name('produto.destroy');
+    Route::get('/produto/{id}', 'show')->name('produto.show');
+    Route::put('/produto/{id}', 'update')->name('produto.update');
 });
