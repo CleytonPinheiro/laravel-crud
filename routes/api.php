@@ -25,6 +25,8 @@ Route::controller(ClientesController::class)->group(function () {
     Route::get('/clientes', 'index')->name('clientes.index');
     Route::post('/clientes', 'store')->name('clientes.store');
     Route::delete('/clientes/{id}', 'destroy')->name('clientes.destroy');
+    Route::get('/cliente/{id}', 'show')->name('cliente.show');
+    Route::put('/cliente/{id}', 'update')->name('cliente.update');
 });
 
 Route::controller(ProdutosController::class)->group(function () {

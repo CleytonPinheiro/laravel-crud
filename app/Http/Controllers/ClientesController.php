@@ -54,6 +54,39 @@ class ClientesController extends Controller
     }
 
     public function show($id) {
-        return Clientes::findOrFail($id);
+        try {
+            return response()->json([
+                Clientes::findOrFail($id),
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'Erro:' => "Erro ao buscar o cliente",
+                'Detalhes' => $th
+            ]);
+        }
+    }
+
+    public function update(Request $request, $id) {
+        try {
+            $validateData = $request->validate([
+                'name' =>['required', 'max:255'],
+                'surname' => ['required'],
+                'birth_date' => ['required'],
+                'cpf' => ['required']
+            ]);
+
+            Clientes::whereId($id)->update($validateData);
+            
+            return response()->json([
+                'Atualizado' => 'cliente atualizado com sucesso',
+                'Detalhes:' => $validateData
+            ]);     
+
+        } catch (\Throwable $th) {
+            return response()->json([
+                'Erro:' => "Erro ao atualizar o cliente",
+                'Detalhes:' => $th
+            ], 422);
+        }
     }
 }
