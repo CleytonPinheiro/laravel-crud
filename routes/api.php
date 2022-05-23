@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\ProdutosController;
 
 /*
@@ -35,4 +36,12 @@ Route::controller(ProdutosController::class)->group(function () {
     Route::delete('/produto/{id}', 'destroy')->name('produto.destroy');
     Route::get('/produto/{id}', 'show')->name('produto.show');
     Route::put('/produto/{id}', 'update')->name('produto.update');
+});
+
+Route::controller(PedidoController::class)->group(function () {
+    Route::get('/pedidos', 'index')->name('pedidos.index');
+    Route::post('/pedidos', 'store')->name('pedidos.store');
+    Route::delete('/pedidos/{id}', 'destroy')->name('pedidos.destroy');
+    Route::get('/pedido/{id}', 'show')->name('pedidos.show');
+    Route::put('/pedido/{id}', 'update')->name('pedido.update');
 });

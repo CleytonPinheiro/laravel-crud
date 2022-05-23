@@ -58,6 +58,7 @@ class ClientesController extends Controller
             return response()->json([
                 Clientes::findOrFail($id),
             ]);
+            
         } catch (\Throwable $th) {
             return response()->json([
                 'Erro:' => "Erro ao buscar o cliente",
