@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ClientesController extends Controller
 {
     public function index() {
-        try {
+        try {            
             return Clientes::all();
 
         } catch (\Throwable $th) {

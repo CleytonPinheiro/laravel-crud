@@ -7,6 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class PedidosCompras extends Model
 {
-    protected $fillable = [ 'sub_total', 'status', 'total_geral' ];
+    protected $fillable = ['cliente_id', 'produto_id', 'status', 'total_geral'];
     use HasFactory;
+
+    public function clientes() 
+    {
+        return $this->hasOne(Clientes::class);
+    }
+
+    public function produtos() 
+    {
+        return $this->hasOne(Produtos::class);
+    }
 }

@@ -15,8 +15,9 @@ class CreatePedidosComprasTable extends Migration
     {
         Schema::create('pedidos_compras', function (Blueprint $table) {
             $table->id();
-            $table->float('sub_total', 6, 2)->nullable();
-            $table->enum('status', ['aberto', 'pago', 'cancelado'])->nullable();
+            $table->foreignId('cliente_id')->constrained();
+            $table->foreignId('produto_id')->constrained();             
+            $table->enum('status', ['aberto', 'pago', 'cancelado'])->default('aberto');
             $table->float('total_geral', 6, 2)->nullable();
             $table->timestamps();
         });

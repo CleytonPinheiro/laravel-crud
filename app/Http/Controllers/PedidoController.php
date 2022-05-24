@@ -13,7 +13,7 @@ class PedidoController extends Controller
 
         } catch (\Throwable $th) {
 
-            return response()->json(['Error ao carregar os pedidos:' => $th], 422);
+            return response()->json(['Erro ao carregar os pedidos:' => $th], 422);
         }
     }
 
@@ -32,9 +32,10 @@ class PedidoController extends Controller
     public function store(Request $request) {
         try {            
             $validateData = $request->validate([
-                'sub_total' => ['required'],
                 'status' =>['required'],
-                'total_geral' => ['required']
+                'total_geral' => ['required'],
+                'produto_id' => ['required'],
+                'cliente_id' => ['required'],
             ]);
 
             PedidosCompras::create($validateData)->save();
@@ -47,7 +48,8 @@ class PedidoController extends Controller
         } catch (\Throwable $th) {
             return response()->json([
                 'Erro:' => "Erro ao cadastrar o pedido",
-                'Detalhes' => $th
+                'Detalhes' => $th,
+                'Dados request:' => $request
             ], 422);
         }
     }
