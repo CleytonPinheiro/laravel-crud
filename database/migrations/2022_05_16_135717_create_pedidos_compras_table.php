@@ -14,6 +14,10 @@ class CreatePedidosComprasTable extends Migration
     public function up()
     {
         Schema::create('pedidos_compras', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
+            $table->charset = 'utf8mb4';
+            $table->collation = 'utf8mb4_unicode_ci';
+
             $table->id();
             $table->foreignId('cliente_id')->constrained();
             $table->foreignId('produto_id')->constrained();             

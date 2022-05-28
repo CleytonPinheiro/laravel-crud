@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Clientes;
 use App\Models\PedidosCompras;
 use Illuminate\Http\Request;
 
@@ -9,7 +10,11 @@ class PedidoController extends Controller
 {
      public function index() {
         try {
-            return PedidosCompras::all();
+            $pedidos = PedidosCompras::all();
+
+            $cliente = PedidosCompras->cliente()->get();
+            
+            return response()->json(['pedidos' => $pedidos, 'cliente' => $cliente]);
 
         } catch (\Throwable $th) {
 
@@ -56,9 +61,10 @@ class PedidoController extends Controller
 
      public function show($id) {
         try {
-            return response()->json([
-                PedidosCompras::findOrFail($id),
-            ]);
+            $pedido = PedidosCompras::where('id', $id)->first();
+
+            dd($pedido);
+            return response()->json(['Pedido:' => $pedido   ]);
 
         } catch (\Throwable $th) {
             return response()->json([

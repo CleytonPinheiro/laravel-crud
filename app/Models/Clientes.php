@@ -10,7 +10,7 @@ class Clientes extends Model
     protected $fillable = ['name',  'surname', 'birth_date', 'cpf' ];
     use HasFactory;
 
-    public function pedido() 
+    public function pedidos_compras()
     {
         return $this->belongsTo(PedidosCompras::class);
     }
