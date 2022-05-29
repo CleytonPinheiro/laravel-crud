@@ -3,13 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
+use Faker\Core\Number;
 use Illuminate\Http\Request;
+use NumberFormatter;
 
 class ClientesController extends Controller
 {
     public function index() {
         try {            
-            return Clientes::all();
+            $clientes =  Clientes::all();
+
+            return response()->json(['clientes' => $clientes ]);
 
         } catch (\Throwable $th) {
 
@@ -35,7 +39,8 @@ class ClientesController extends Controller
                 'name' =>['required', 'max:255'],
                 'surname' => ['required'],
                 'birth_date' => ['required'],
-                'cpf' => ['required']
+                'cpf' => ['required'],
+                'pedidos_compras_id' => ['required']
             ]);
 
             Clientes::create($validateData)->save();
@@ -55,15 +60,17 @@ class ClientesController extends Controller
 
     public function show($id) {
         try {
-            return response()->json([
-                Clientes::findOrFail($id),
-            ]);
+            $cliente = Clientes::where('id', $id)->first();
+
+            $pedido = $cliente->pedidos_compras()->first();
+        
+            return response()->json([ $cliente, $pedido ]);
             
         } catch (\Throwable $th) {
             return response()->json([
                 'Erro:' => "Erro ao buscar o cliente",
-                'Detalhes' => $th
-            ]);
+                'Detalhes' => $th, "id" => $id
+            ], 422);
         }
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class PedidosCompras extends Model
 {
-    protected $fillable = ['cliente_id', 'produto_id', 'status', 'total_geral'];
+    protected $fillable = ['status', 'total_geral'];
     use HasFactory;
 
     public function cliente() 

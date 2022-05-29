@@ -13,7 +13,6 @@ class ProdutosController extends Controller
             return Produtos::all();
 
         } catch (\Throwable $th) {
-
             return response()->json(['Error ao carregar os clientes:' => $th], 422);
         }
     }
@@ -42,9 +41,9 @@ class ProdutosController extends Controller
         }
     }
 
-     public function destroy($idProduct) {
+     public function destroy($id) {
         try {
-            Produtos::destroy($idProduct);
+            Produtos::destroy($id);
 
             return response()->json(['Deletado' => 'Produto deletado com sucesso.']);
 
@@ -54,11 +53,16 @@ class ProdutosController extends Controller
         }
     }
 
-    public function show($idProduct) {
+    public function show($id) {
         try {
-            return response()->json([
-                Produtos::findOrFail($idProduct),
-            ]);
+            $product = Produtos::where('id', $id)->first();
+
+            if($product) {
+                return response()->json([ $product ]);
+
+            } else {
+                 return response()->json([ 'Erro:' => 'Produto não encontrado' ]);
+            }
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -68,7 +72,7 @@ class ProdutosController extends Controller
         }
     }
 
-    public function update(Request $request, $idProduct) {
+    public function update(Request $request, $id) {
         try {            
             $validateData = $request->validate([
                 'product' =>['required', 'max:255'],
@@ -77,12 +81,16 @@ class ProdutosController extends Controller
                 'value_unit' => ['required']
             ]);
 
-            Produtos::whereId($idProduct)->update($validateData);
+            if($validateData) {
+                Produtos::whereId($id)->update($validateData);
 
-            return response()->json([
-                'Sucesso:' => 'Produto atualizado com sucesso.',
-                'Produto:' => $validateData
-            ], 201);
+                return response()->json([
+                    'Sucesso:' => 'Produto atualizado com sucesso.',
+                    'Produto:' => $validateData
+                ], 201);
+            } else {
+                return response()->json(['Erro:' => 'Produto não atualizado']);
+            }          
 
         } catch (\Throwable $th) {
 

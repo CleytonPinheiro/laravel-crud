@@ -12,9 +12,9 @@ class PedidoController extends Controller
         try {
             $pedidos = PedidosCompras::all();
 
-            $cliente = PedidosCompras->cliente()->get();
+             return response()->json(['pedidos' => $pedidos ]);
             
-            return response()->json(['pedidos' => $pedidos, 'cliente' => $cliente]);
+            
 
         } catch (\Throwable $th) {
 
@@ -38,9 +38,7 @@ class PedidoController extends Controller
         try {            
             $validateData = $request->validate([
                 'status' =>['required'],
-                'total_geral' => ['required'],
-                'produto_id' => ['required'],
-                'cliente_id' => ['required'],
+                'total_geral' => ['required']
             ]);
 
             PedidosCompras::create($validateData)->save();
@@ -63,8 +61,13 @@ class PedidoController extends Controller
         try {
             $pedido = PedidosCompras::where('id', $id)->first();
 
-            dd($pedido);
-            return response()->json(['Pedido:' => $pedido   ]);
+            $produto = $pedido->produto()->first();
+
+            return response()->json([ $pedido, $produto ]);
+
+            if($pedido) {
+                return response()->json(['Pedido:' => $pedido ]);
+            }           
 
         } catch (\Throwable $th) {
             return response()->json([

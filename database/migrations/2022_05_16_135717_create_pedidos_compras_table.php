@@ -19,8 +19,7 @@ class CreatePedidosComprasTable extends Migration
             $table->collation = 'utf8mb4_unicode_ci';
 
             $table->id();
-            $table->foreignId('cliente_id')->constrained();
-            $table->foreignId('produto_id')->constrained();             
+            //$table->foreignId('produto_id')->constrained();             
             $table->enum('status', ['aberto', 'pago', 'cancelado'])->default('aberto');
             $table->float('total_geral', 6, 2)->nullable();
             $table->timestamps();
