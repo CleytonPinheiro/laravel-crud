@@ -12,6 +12,6 @@ class Clientes extends Model
 
     public function pedidos_compras()
     {
-        return $this->belongsTo(PedidosCompras::class, 'pedidos_compras_id', 'id');
+        return $this->belongsTo(PedidosCompras::class);
     }
 }

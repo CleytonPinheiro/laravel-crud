@@ -2,31 +2,37 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Clientes;
 use App\Models\PedidosCompras;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
 {
-     public function index() {
+    public function index() {
         try {
             $pedidos = PedidosCompras::all();
 
-             return response()->json(['pedidos' => $pedidos ]);
-            
-            
+            if($pedidos) {
+                return response()->json( $pedidos );
+            } else {
+                return response()->json( ["ERRO:" =>  "Não existe pedido cadastrado"] );
+            }        
 
         } catch (\Throwable $th) {
-
+            
             return response()->json(['Erro ao carregar os pedidos:' => $th], 422);
         }
     }
 
-     public function destroy($idPedido) {
+    public function destroy($idPedido) {
         try {
-            PedidosCompras::destroy($idPedido);
+            $pedido = PedidosCompras::destroy($idPedido);
 
-            return response()->json(['Deletado' => 'Pedido deletado com sucesso']);
+            if($pedido) {
+
+                return response()->json(['Deletado' => 'Pedido deletado com sucesso']);
+            } else {
+                return response()->json(['ERRO:' => 'Pedido não encontrado']);
+            }          
 
         } catch (\Throwable $th) {
 
@@ -41,33 +47,30 @@ class PedidoController extends Controller
                 'total_geral' => ['required']
             ]);
 
-            PedidosCompras::create($validateData)->save();
+             if($validateData) {
+                PedidosCompras::create($validateData)->save();
 
-            return response()->json([
-                'Sucesso' => 'Pedido cadastrado com sucesso',
-                'Pedido' => $validateData
-            ], 201);
+                return response()->json([ 'Sucesso' => 'Pedido cadastrado com sucesso', 'Detalhes:' => $validateData ], 201);
+            } else {
+
+                return response()->json([ 'ERRO' => 'Pedido não cadastrado', 'Detalhes:' => $validateData ], 422);
+            }        
 
         } catch (\Throwable $th) {
-            return response()->json([
-                'Erro:' => "Erro ao cadastrar o pedido",
-                'Detalhes' => $th,
-                'Dados request:' => $request
-            ], 422);
+
+            return response()->json(['Erro:' => "Erro ao cadastrar o pedido", 'Detalhes' => $th, 'Dados request:' => $request ], 422);
         }
     }
 
-     public function show($id) {
-        try {
+    public function show($id) {
+        try {            
             $pedido = PedidosCompras::where('id', $id)->first();
 
-            $produto = $pedido->produto()->first();
-
-            return response()->json([ $pedido, $produto ]);
-
             if($pedido) {
-                return response()->json(['Pedido:' => $pedido ]);
-            }           
+                return response()->json([ $pedido ]);
+            } else {
+                return response()->json(['ERRO:' => 'Pedido ou produto não encontrado']);
+            }         
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -80,17 +83,15 @@ class PedidoController extends Controller
     public function update(Request $request, $id) {
         try {
             $validateData = $request->validate([
-                'sub_total' => ['required'],
-                'status' =>['required'],
-                'total_geral' => ['required']
+                'total_geral' => ['required'],
+                'status' =>['required']
             ]);
 
-            PedidosCompras::whereId($id)->update($validateData);
+            if($validateData) {
+                PedidosCompras::whereId($id)->update($validateData);
             
-            return response()->json([
-                'Atualizado' => 'Pedido atualizado com sucesso',
-                'Detalhes:' => $validateData
-            ]);     
+                return response()->json([ 'Atualizado' => 'Pedido atualizado com sucesso', 'Detalhes:' => $validateData ]);     
+            }           
 
         } catch (\Throwable $th) {
             return response()->json([

@@ -3,18 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Clientes;
-use Faker\Core\Number;
 use Illuminate\Http\Request;
-use NumberFormatter;
 
 class ClientesController extends Controller
 {
     public function index() {
         try {            
             $clientes =  Clientes::all();
-
-            return response()->json(['clientes' => $clientes ]);
-
+            
+            if($clientes) {
+                return response()->json( $clientes );
+            } else {
+                return response()->json([ 'Erro:' => 'Não existe cliente cadastrado']);
+            }
+            
         } catch (\Throwable $th) {
 
             return response()->json(['Error ao carregar os clientes:' => $th], 422);
@@ -23,9 +25,13 @@ class ClientesController extends Controller
 
     public function destroy($idClient) {
         try {
-            Clientes::destroy($idClient);
+            $cliente = Clientes::destroy($idClient);
 
-            return response()->json(['Deletado' => 'Cliente deletado com sucesso']);
+            if($cliente) {
+                return response()->json(['Deletado' => 'Cliente deletado com sucesso']);
+            } else {
+                return response()->json(['Erro:' => 'Cliente não encontrado para deletá-lo']);
+            }          
 
         } catch (\Throwable $th) {
 
@@ -43,12 +49,13 @@ class ClientesController extends Controller
                 'pedidos_compras_id' => ['required']
             ]);
 
-            Clientes::create($validateData)->save();
+            $cliente = Clientes::create($validateData)->save();
 
-            return response()->json([
-                'Sucesso' => 'Cliente cadastrado com sucesso',
-                'Cliente' => $validateData
-            ], 201);
+            if($cliente) {
+                return response()->json(['Sucesso' => 'Cliente cadastrado com sucesso', 'Detalhes' => $validateData ], 201);
+            } else {
+                return response()->json(['Erro:' => 'Cliente não foi cadastrado']);
+            }         
 
         } catch (\Throwable $th) {
             return response()->json([
@@ -63,13 +70,17 @@ class ClientesController extends Controller
             $cliente = Clientes::where('id', $id)->first();
 
             $pedido = $cliente->pedidos_compras()->first();
-        
-            return response()->json([ $cliente, $pedido ]);
+
+            if($cliente) {
+                return response()->json([ $cliente, $pedido ]);
+            } else {
+                return response()->json(['Erro:' => 'Cliente não encontrado']);
+            }                    
             
         } catch (\Throwable $th) {
             return response()->json([
                 'Erro:' => "Erro ao buscar o cliente",
-                'Detalhes' => $th, "id" => $id
+                'Detalhes' => $th, "Cliente" => $id
             ], 422);
         }
     }
@@ -83,17 +94,18 @@ class ClientesController extends Controller
                 'cpf' => ['required']
             ]);
 
-            Clientes::whereId($id)->update($validateData);
-            
-            return response()->json([
-                'Atualizado' => 'cliente atualizado com sucesso',
-                'Detalhes:' => $validateData
-            ]);     
+            $cliente =  Clientes::whereId($id)->update($validateData);
+
+            if($cliente) {
+                return response()->json(['Atualizado' => 'cliente atualizado com sucesso', 'Detalhes:' => $validateData ]);
+            } else {
+                return response()->json(['Erro:' => 'Cliente não encontrado']);
+            }               
 
         } catch (\Throwable $th) {
             return response()->json([
                 'Erro:' => "Erro ao atualizar o cliente",
-                'Detalhes:' => $th
+                'Detalhes:' => $th, 'Dados' => $validateData
             ], 422);
         }
     }
