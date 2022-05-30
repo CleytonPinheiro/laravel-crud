@@ -73,6 +73,140 @@ Baixe o Api em [Download Insomnia](https://insomnia.rest/download)
 
 Na raiz do projeto import o arquivo **insomnia.json** no Api Client.
 
+## Documentação da API - Rotas
+
+#### Retorna todos os Produtos
+
+```http
+  GET localhost:8000/api/produtos
+```
+
+#### Retorna todos os Pedidos
+
+```http
+  GET localhost:8000/api/pedidos
+```
+
+#### Retorna todos os clientes
+
+```http
+  GET localhost:8000/api/clientes
+```
+
+#### Retorna um produto
+
+```http
+  GET localhost:8000/api/produto/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+#### Retorna um pedido
+
+```http
+  GET localhost:8000/api/pedido/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+
+#### Retorna um cliente com seu respectivo pedido
+
+```http
+  GET localhost:8000/api/produto/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+
+#### Deleta um pedido
+
+```http
+  DEL localhost:8000/api/pedidos/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+#### Deleta um produto
+
+```http
+  DEL localhost:8000/api/produto/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+#### Deleta um pedido
+
+```http
+  DEL localhost:8000/api/pedidos/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+#### Deleta um cliente
+
+```http
+  DEL localhost:8000/api/clientes/${id}
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `id`      | `string` | **Obrigatório**. O ID do item que você quer |
+
+
+#### Cadastra um cliente
+
+```http
+  POST localhost:8000/api/clientes
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `name`      | `string` | **Obrigatório**. O ID do item que você quer |
+| `surname`      | `string` | **Obrigatório**. O ID do item que você quer |
+| `birth_date`      | `date` | **Obrigatório**. O ID do item que você quer |
+| `cpf`      | `number` | **Obrigatório**. O ID do item que você quer |
+| `pedidos_compras_id`      | `number` | **Obrigatório**. O ID do pedido |
+
+
+#### Cadastra um pedido
+
+```http
+  POST localhost:8000/api/pedidos
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `status`      | `string` | **Obrigatório**. ABERTO, PAGO OU CANCELADO |
+| `total_geral`      | `number` | **Obrigatório**.Valor total do pedido |
+
+#### Cadastra um produto
+
+```http
+  POST localhost:8000/api/produtos
+```
+
+| Parâmetro   | Tipo       | Descrição                                   |
+| :---------- | :--------- | :------------------------------------------ |
+| `product`      | `string` | **Obrigatório**. Produto a ser cadastrado |
+| `amount`      | `number` | **Obrigatório**.Quantidade do produto. |
+| `category`      | `string` | **Obrigatório**. Categoria do produto |
+| `value_unit`      | `number` | **Obrigatório**.Valor total do produto |
+| `pedidos_compras_id`      | `string` | **Obrigatório**.Pedido que o produto pertence |
+
+
 ## Documentação
 
 [Documentação Laravel](https://laravel.com/docs/9.x)
