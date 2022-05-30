@@ -2,13 +2,13 @@
 
 Projeto desenvovendo crud e relacionando as tabelas.
 
-# Ferramenta e versão
+# Ferramentas e versões
 
 Projeto desenvolvido com Laravel [ LARAVEL ](https://github.com/laravel) version 9.x.
 
-Banco de dados rodando em container Docker [ Docker ](https://www.docker.com/)
+Banco de dados rodando em container Docker [ Docker ](https://www.docker.com/) version 20.10
 
-Api Client Open Source [ insomnia ](https://insomnia.rest/)
+Api Client Open Source [ insomnia ](https://insomnia.rest/) version 2022.3
 
 ## Rodando localmente o projeto
 
@@ -43,8 +43,21 @@ Inicie o banco de dados e PhpMyAdmin
 ```bash
   docker-compose up
 ```
+# Configurações banco e variáveis de ambiente
 
-Inicie o servidor
+DB_DATABASE=produtos
+DB_USERNAME=root
+DB_PASSWORD=root
+
+# MIGRATES - Criando as tabelas no banco
+
+Criando as tabelas e relacionamentos
+
+```bash
+  php artisan migrate
+```
+
+Inicie o servidor back end
 
 ```bash
   localhost:8000
@@ -68,21 +81,12 @@ Na raiz do projeto import o arquivo **insomnia.json** no Api Client.
 
 [Documentação Angular](https://angular.io/)
 
-
 ## Stack utilizada
 
 **Front-end:** Angular 13 (Em desenvolvimento)
 
 **Back-end:** Laravel 9.x
 
-**Docker:** Docker
+**Docker:** Docker 20.10
 
-**Banco de dados:** MySql
-
-![Logo](https://img2.gratispng.com/20180612/wbe/kisspng-laravel-software-framework-php-web-framework-model-framework-5b1fe07e288525.324423641528815742166.jpg)
-
-![Logo](https://img2.gratispng.com/20180622/gxu/kisspng-mysql-database-web-development-computer-icons-mysql-5b2cc2f2df70e6.4579243815296601469152.jpg)
-
-![Logo](https://img2.gratispng.com/20180802/ssp/kisspng-using-docker-developing-and-deploying-software-wi-docker-and-dockerizing-simple-node-js-application-5b63ba47ac8c92.4680188815332624077068.jpg)
-
-![Logo](https://img2.gratispng.com/20180806/giz/kisspng-logo-angularjs-computer-icons-font-angular-make-it-5b6868285d8ac7.5993652215335690643832.jpg)
+**Banco de dados:** MySql 8
